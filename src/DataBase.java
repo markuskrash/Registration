@@ -1,12 +1,14 @@
-package DataBase;
-
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.Objects;
 
 public class DataBase {
     public static Connection con = null;
 
     public void connect () throws SQLException {
-        con = DriverManager.getConnection("jdbc:sqlite:users.db");
+        con = DriverManager.getConnection("jdbc:sqlite:users.sqlite");
         String sql = """
                 CREATE TABLE IF NOT EXISTS Users(
                     id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,23 +21,23 @@ public class DataBase {
         st.execute();
     }
 
-//    public String login() throws SQLException {
-//        String sql = "SELECT password FROM Person WHERE login = " + "'" + Application.instance.first_jtf.getText() +  "'";
-//        PreparedStatement s = con.prepareStatement(sql);
-//        ResultSet resultSet = s.executeQuery();
-//        if (!resultSet.next()) {
-//            return "IL";
-//        }
-//        else if (Objects.equals(resultSet.getString("password"), hex(Application.instance.second_jtf.getText(), 5))){
-//            if (Application.instance.first_jtf.getText().equals("admin")){
-//                return "admin";
-//            }
-//            return "OK";
-//        }
-//        else{
-//            return "IP";
-//        }
-//    }
+    public String login() throws SQLException {
+        String sql = "SELECT password FROM Users WHERE login = " + "'" + MainWindow.instance.firstJTF.getText() +  "'";
+        PreparedStatement s = con.prepareStatement(sql);
+        ResultSet resultSet = s.executeQuery();
+        if (!resultSet.next()) {
+            return "ERR";
+        }
+        else if (Objects.equals(resultSet.getString("password"), hex(MainWindow.instance.secondJTF.getText(), 5))){
+            if (MainWindow.instance.firstJTF.getText().equals("admin")){
+                return "admin";
+            }
+            return "OK";
+        }
+        else{
+            return "ERR";
+        }
+    }
 //
 //    public boolean NewUser(Person person) throws  SQLException{
 //        String login = person.loginP;
@@ -82,28 +84,28 @@ public class DataBase {
 //        return list;
 //    }
 //
-//    public String hex(String str, int k){
-//
-//        byte[] messageDigest = new byte[0];
-//        str += "abrakadabra";
-//        try {
-//            MessageDigest md = MessageDigest.getInstance("MD5");
-//            md.reset();
-//            md.update(str.getBytes());
-//            messageDigest = md.digest();
-//
-//        }catch (NoSuchAlgorithmException e){
-//            System.err.println(e.getMessage());
-//        }
-//        BigInteger bigInt = new BigInteger(1, messageDigest);
-//        StringBuilder md5Hex = new StringBuilder(bigInt.toString(16));
-//        while (md5Hex.length() < 32){
-//            md5Hex.insert(0, "0");
-//        }
-//        if (k == 0)return md5Hex.toString().toUpperCase();
-//        else return hex(md5Hex.toString(), k - 1);
-//    }
-//
+    public static String hex(String str, int k){
+
+        byte[] messageDigest = new byte[0];
+        str += "markuskrash";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.reset();
+            md.update(str.getBytes());
+            messageDigest = md.digest();
+
+        }catch (NoSuchAlgorithmException e){
+            System.err.println(e.getMessage());
+        }
+        BigInteger bigInt = new BigInteger(1, messageDigest);
+        StringBuilder md5Hex = new StringBuilder(bigInt.toString(16));
+        while (md5Hex.length() < 32){
+            md5Hex.insert(0, "0");
+        }
+        if (k == 0)return md5Hex.toString().toUpperCase();
+        else return hex(md5Hex.toString(), k - 1);
+    }
+
 //    public void changePassword (String login, String password) throws SQLException {
 //        String newPassword = hex(password, 5);
 //        String sql = String.format("UPDATE Person SET password = '%s' WHERE login = '%s'", newPassword, login);

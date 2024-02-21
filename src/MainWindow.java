@@ -1,11 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 
-import DataBase.DataBase;
-import Windows.AdminWindow;
-import Windows.SignUpWindow;
-import Windows.UserWindow;
-
 import java.sql.SQLException;
 
 public class MainWindow extends JFrame {
