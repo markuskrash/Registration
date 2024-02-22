@@ -16,14 +16,9 @@ public class User {
         this.secondName = secondName;
     }
 
-    public static boolean addUser(User user, DataBase db) throws SQLException {
-        String login = user.login;
-        String password = user.password;
-        String firstName = user.firstName;
-        String secondName = user.secondName;
-
+    public boolean save() throws SQLException {
         String sql = "SELECT Login FROM Users WHERE Login = " + "'" + login + "'";
-        PreparedStatement s = db.con.prepareStatement(sql);
+        PreparedStatement s = DataBase.con.prepareStatement(sql);
         ResultSet resultSet = s.executeQuery();
 
         if (resultSet.next()){
@@ -41,7 +36,7 @@ public class User {
                 login = login.replaceAll(" ", "");
 
                 sql = String.format("INSERT INTO Users (login, password, firstName, secondName) VALUES ('%s', '%s', '%s', '%s')", login, password, firstName, secondName);
-                PreparedStatement st = db.con.prepareStatement(sql);
+                PreparedStatement st = DataBase.con.prepareStatement(sql);
                 st.execute();
                 return true;
             }

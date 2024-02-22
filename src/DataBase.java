@@ -38,52 +38,7 @@ public class DataBase {
             return "ERR";
         }
     }
-//
-//    public boolean NewUser(Person person) throws  SQLException{
-//        String login = person.loginP;
-//        String password = person.passwordP;
-//        String firstName = person.firstNameP;
-//        String secondName = person.secondNameP;
-//
-//        String sql = "SELECT login FROM Person WHERE login = " + "'" + login + "'";
-//        PreparedStatement s = con.prepareStatement(sql);
-//        ResultSet resultSet = s.executeQuery();
-//
-//        if (resultSet.next()){
-//            System.out.println("Данный пользователь уже существует. Попробуйте другой.");
-//        }
-//        else{
-//            if (password.length() <= 3){
-//                System.out.println("Введите другой пароль. Минимальный размер пароля 3 символа");
-//            }
-//            else if (login.isEmpty()){
-//                System.out.println("Введите другой логин. Минимальный размер логина 1 символ");
-//            }
-//            else{
-//                password = hex(password, 5);
-//                login = login.replaceAll(" ", "");
-//
-//                sql = String.format("INSERT INTO Person (login, password, firstName, secondName) VALUES ('%s', '%s', '%s', '%s')", login, password, firstName, secondName);
-//                PreparedStatement st = con.prepareStatement(sql);
-//                st.execute();
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public List<String> getListName () throws SQLException {
-//        List<String> list = new ArrayList<>();
-//        String sql = "SELECT login FROM PERSON";
-//        PreparedStatement ps = con.prepareStatement(sql);
-//        ResultSet resultSet = ps.executeQuery();
-//
-//        while (resultSet.next()){
-//            list.add(resultSet.getString(1));
-//        }
-//        return list;
-//    }
-//
+
     public static String hex(String str, int k){
 
         byte[] messageDigest = new byte[0];
@@ -106,15 +61,5 @@ public class DataBase {
         else return hex(md5Hex.toString(), k - 1);
     }
 
-//    public void changePassword (String login, String password) throws SQLException {
-//        String newPassword = hex(password, 5);
-//        String sql = String.format("UPDATE Person SET password = '%s' WHERE login = '%s'", newPassword, login);
-//
-//        PreparedStatement ps = con.prepareStatement(sql);
-//        ps.execute();
-//    }
-//
-//    public void execute(String sql) throws SQLException {
-//        con.prepareStatement(sql).execute();
-//    }
+
 }

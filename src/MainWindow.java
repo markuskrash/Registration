@@ -80,7 +80,7 @@ public class MainWindow extends JFrame {
         });
 
         signUpBtn.addActionListener(e -> {
-            SignUpWindow wndSignUp = new SignUpWindow();
+            SignUpWindow wndSignUp = new SignUpWindow(firstJTF.getText(), secondJTF.getText());
             wndSignUp.setVisible(true);
         });
     }
